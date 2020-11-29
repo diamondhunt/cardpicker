@@ -40,4 +40,10 @@ public class Card
 	{
 		return "Card: " + this.name + " Holographic: " + this.isHolographic;
 	}
+	
+	public Rarity getRarity()
+	{
+		return this.rarity;
+		
+	}
 }

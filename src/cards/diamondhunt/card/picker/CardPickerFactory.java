@@ -3,7 +3,12 @@ package cards.diamondhunt.card.picker;
 import java.util.ArrayList;
 
 import cards.diamondhunt.card.Card;
-import cards.diamondhunt.card.Rarity;
+import cards.diamondhunt.card.CommonCard;
+import cards.diamondhunt.card.LegendaryCard;
+import cards.diamondhunt.card.RareCard;
+import cards.diamondhunt.card.UncommonCard;
+import cards.diamondhunt.card.VeryRareCard;
+import cards.diamondhunt.database.DatabaseFactory;
 
 /**
  * Singleton
@@ -23,47 +28,35 @@ public class CardPickerFactory
 	
 	private CardPickerFactory()
 	{
+		ArrayList<Card> allCards = DatabaseFactory.getInstance().getAllCards();
 		this.commonCards = new ArrayList<Card>();
 		this.uncommonCards = new ArrayList<Card>();
 		this.rareCards = new ArrayList<Card>();
 		this.veryRareCards = new ArrayList<Card>();
 		this.legendaryCards = new ArrayList<Card>();
 		
-		//common cards
-		this.commonCards.add(new Card("stone", Rarity.COMMON));
-		this.commonCards.add(new Card("copper", Rarity.COMMON));
-		this.commonCards.add(new Card("iron", Rarity.COMMON));
-		this.commonCards.add(new Card("silver", Rarity.COMMON));
 		
-		this.commonCards.add(new Card("miner", Rarity.COMMON));
-		this.commonCards.add(new Card("drills", Rarity.COMMON));
-		this.commonCards.add(new Card("crushers", Rarity.COMMON));
-		
-		this.commonCards.add(new Card("bronzeBar", Rarity.COMMON));
-		this.commonCards.add(new Card("ironBar", Rarity.COMMON));
-		this.commonCards.add(new Card("silverBar", Rarity.COMMON));
-		
-		this.commonCards.add(new Card("vialOfWater", Rarity.COMMON));
-		
-		this.commonCards.add(new Card("chicken", Rarity.COMMON));
-		this.commonCards.add(new Card("rat", Rarity.COMMON));
-		this.commonCards.add(new Card("bee", Rarity.COMMON));
-		this.commonCards.add(new Card("rawChicken", Rarity.COMMON));
-		this.commonCards.add(new Card("stinger", Rarity.COMMON));
-		this.commonCards.add(new Card("cheese", Rarity.COMMON));
-		
-		this.commonCards.add(new Card("snake", Rarity.COMMON));
-		this.commonCards.add(new Card("ent", Rarity.COMMON));
-		this.commonCards.add(new Card("thief", Rarity.COMMON));
-		this.commonCards.add(new Card("snakeskin", Rarity.COMMON));
-		this.commonCards.add(new Card("ironDagger", Rarity.COMMON));
-		
-		this.commonCards.add(new Card("bear", Rarity.COMMON));
-		this.commonCards.add(new Card("spider", Rarity.COMMON));
-		this.commonCards.add(new Card("skeleton", Rarity.COMMON));
-		this.commonCards.add(new Card("skeletonSword", Rarity.COMMON));
-		this.commonCards.add(new Card("skeletonShield", Rarity.COMMON));
-		this.commonCards.add(new Card("boneAmulet", Rarity.COMMON));
+		for(Card card : allCards)
+		{
+			switch(card.getRarity())
+			{
+				case COMMON:
+					this.commonCards.add(new CommonCard(card.getName(), card.getRarity()));
+				break;
+				case UNCOMMON:
+					this.uncommonCards.add(new UncommonCard(card.getName(), card.getRarity()));
+				break;
+				case RARE:
+					this.rareCards.add(new RareCard(card.getName(), card.getRarity()));
+				break;
+				case VERY_RARE:
+					this.veryRareCards.add(new VeryRareCard(card.getName(), card.getRarity()));
+				break;
+				case LEGENDARY:
+					this.legendaryCards.add(new LegendaryCard(card.getName(), card.getRarity()));
+				break;
+			}
+		}
 	}
 	
 	public static CardPickerFactory getInstance()
